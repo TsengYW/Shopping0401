@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Product</title>
+</head>
+<body>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<table border="1" width="90%">
+		<tr>
+			<td><img src="images/airpods.jpg"
+				style="margin: 5px auto 5px; display: block;" id="pic1" width="80%"></img><br />
+				<div id="p1name" style="text-align: center">Product1</div> <br />
+				<div id="p1price" style="text-align: center">7500</div></td>
+			<td><img src="images/ipadair.jpg" id="pic2"
+				style="margin: 5px auto 5px; display: block;" width="80%"> </img><br />
+				<div id="p2name" style="text-align: center">Product2</div> <br />
+				<div id="p2price" style="text-align: center">17955</div></td>
+			<td><img src="images/iphone12.jpg" id="pic3"
+				style="margin: 5px auto 5px; display: block;" width="80%"></img><br />
+				<div id="p3name" style="text-align: center">Product3</div> <br />
+				<div id="p3price" style="text-align: center">28000</div></td>
+		</tr>
+	</table>
+	<button onclick="prev()">Previous</button>
+	<button onclick="next()">Next</button>
+	<script type="text/javascript">
+	var arry;
+	var index=2;
+	function start(){
+		$.post("ProductServlet",result);
+		//alert(data);
+	}
+	function result(data){
+		arry=JSON.parse(data);
+		//alert(data)
+	}
+	function prev(){
+		index--;
+		setValues(1); // 1 for previous
+	}
+	function next(){
+		index++;
+		setValues(2); // 2 for next
+	}
+	function setValues(dir){
+		if(dir==1)
+		{
+			if(index<0)
+				index=arry.length-1;
+			$("#pic1").attr("src",arry[index].imagepath);
+			$("#p1name").text(arry[index].productname);
+			$("#p1price").text(arry[index].price);
+			index--;
+			if(index<0)
+				index=arry.length-1;
+			$("#pic2").attr("src",arry[index].imagepath);
+			$("#p2name").text(arry[index].productname);
+			$("#p2price").text(arry[index].price);
+			index--;
+			if(index<0)
+				index=arry.length-1;
+			$("#pic3").attr("src",arry[index].imagepath);
+			$("#p3name").text(arry[index].productname);
+			$("#p3price").text(arry[index].price);
+			
+		}
+		if(dir==2){
+			if(index>=arry.length)
+				index=0;
+			$("#pic1").attr("src",arry[index].imagepath);
+			$("#p1name").text(arry[index].productname);
+			$("#p1price").text(arry[index].price);
+			index++;
+			if(index>=arry.length)
+				index=0;
+			$("#pic2").attr("src",arry[index].imagepath);
+			$("#p2name").text(arry[index].productname);
+			$("#p2price").text(arry[index].price);
+			index++;
+			if(index>=arry.length)
+				index=0;
+			$("#pic3").attr("src",arry[index].imagepath);
+			$("#p3name").text(arry[index].productname);
+			$("#p3price").text(arry[index].price);
+			
+		}
+	}
+	$(document).ready(start);
+	</script>
+
+</body>
+</html>
